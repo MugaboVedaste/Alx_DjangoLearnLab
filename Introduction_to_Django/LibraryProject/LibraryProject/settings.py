@@ -130,4 +130,5 @@ INSTALLED_APPS = [
 
     # Your custom app
     'books',
+    'bookshelf',
 ]
