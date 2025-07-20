@@ -26,5 +26,6 @@ from django.urls import path, include  # 👈 Add include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('books.urls')),  # 👈 Add this line
+    path('', include('relationship_app.urls')),
 ]
 
