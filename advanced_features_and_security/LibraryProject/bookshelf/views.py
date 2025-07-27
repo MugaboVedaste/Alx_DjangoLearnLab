@@ -38,3 +38,15 @@ def search_books(request):
     if form.is_valid():
         title = form.cleaned_data['title']
         books = Book.objects.filter(title__icontains=title)
+
+from .forms import ExampleForm
+
+def example_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = ExampleForm()
+    
+    return render(request, 'bookshelf/forme_example.html', {'form': form})
