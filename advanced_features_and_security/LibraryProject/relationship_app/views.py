@@ -5,9 +5,9 @@ from django.http import HttpResponse
 from .models import Book
 
 # Function-based view to list all books and their authors
-def book_list_view(request):
+def book_list(request):
      books = Book.objects.all()  # Use plain all() to pass the check
-    return render(request, 'relationship_app/list_books.html', {'books': books})
+     return render(request, 'relationship_app/list_books.html', {'books': books})
 
 from .models import Library
 
