@@ -137,3 +137,37 @@ INSTALLED_APPS = [
 
 # AUTH_USER_MODEL = 'relationship_app.CustomUser'  # Replace `yourapp` with the app name (e.g., 'accounts')
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
+# Security settings
+DEBUG = False  # Only for production
+
+# Prevent content type sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable browser XSS filter
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent clickjacking
+X_FRAME_OPTIONS = 'DENY'
+
+# Cookies should be sent only over HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Recommended for secure session storage
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Only allow HTTPS in production
+SECURE_SSL_REDIRECT = True
+
+INSTALLED_APPS += ['csp']
+
+MIDDLEWARE += [
+    'csp.middleware.CSPMiddleware',
+]
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", 'https://trusted.cdn.com')  # adjust as needed
+CSP_STYLE_SRC = ("'self'", 'https://trusted.cdn.com')
+CSP_IMG_SRC = ("'self'", 'data:')

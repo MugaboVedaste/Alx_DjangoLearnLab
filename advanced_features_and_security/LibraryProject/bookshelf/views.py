@@ -29,3 +29,12 @@ def delete_book(request, book_id):
 def book_list(request):
     books = Book.objects.all()
     return render(request, 'books/book_list.html', {'books': books})
+
+# views.py
+from .forms import BookSearchForm
+
+def search_books(request):
+    form = BookSearchForm(request.GET)
+    if form.is_valid():
+        title = form.cleaned_data['title']
+        books = Book.objects.filter(title__icontains=title)
