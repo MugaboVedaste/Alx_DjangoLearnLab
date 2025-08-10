@@ -13,8 +13,11 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookSerializer
     permission_classes = [permissions.AllowAny]  # Anyone can read
     # ✅ Enable filtering, search, and ordering
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-
+    filter_backends = [
+        DjangoFilterBackend,     # For filtering
+        filters.SearchFilter,    # For searching
+        filters.OrderingFilter,  # For ordering
+    ]
     # Filter by exact matches
     filterset_fields = ['title', 'author', 'publication_year']
 
