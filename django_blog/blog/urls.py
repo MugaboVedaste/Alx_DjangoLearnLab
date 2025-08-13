@@ -8,7 +8,8 @@ from .views import (
     PostDeleteView,
     CommentCreateView,
     CommentUpdateView,
-    CommentDeleteView
+    CommentDeleteView,
+    PostByTagListView
 )
 from .views import register_view, login_view, logout_view, profile_view, post_search,posts_by_tag
 
@@ -28,6 +29,7 @@ urlpatterns = [
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment-edit'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
     path('search/', views.post_search, name='post-search'),
-    path('tags/<slug:tag_slug>/', views.posts_by_tag, name='posts-by-tag')
+    path('tags/<slug:tag_slug>/', views.posts_by_tag, name='posts-by-tag'),
+    path('tags/<slug:tag_slug>/', views.PostByTagListView.as_view(), name='posts-by-tag'),
 ]
 
