@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm, PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -135,3 +136,16 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.object.post.get_absolute_url()
 
         return self.object.post.get_absolute_url()
+
+def post_search(request):
+    query = request.GET.get('q', '')
+    results = Post.objects.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(tags__name__icontains=query)  # only if using django-taggit
+    ).distinct()
+    return render(request, 'blog/post_search_results.html', {'results': results, 'query': query})
+
+def posts_by_tag(request, tag_slug):
+    posts = Post.objects.filter(tags__name__iexact=tag_slug)
+    return render(request, 'blog/posts_by_tag.html', {'posts': posts, 'tag': tag_slug})
