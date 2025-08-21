@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'social_media_api.wsgi.application'
 DATABASES = {
     'default':  {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'social_db',   # Database name
+        'NAME': 'social_db2',   # Database name
         'USER': 'root',       # MySQL username
         'PASSWORD': 'Mugabo$123',   # MySQL password
         'HOST': 'localhost',    # or an IP address
@@ -134,7 +134,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # REST Framework configuration (using JWT)
 REST_FRAMEWORK = {

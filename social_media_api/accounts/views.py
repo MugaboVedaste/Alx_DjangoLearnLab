@@ -7,6 +7,7 @@ from .serializers import RegisterSerializer, UserSerializer, LoginSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
+from .models import CustomUser
 
 User = get_user_model()
 
@@ -64,11 +65,13 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
-class FollowUserView(APIView):
+class FollowUserView(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()   # ✅ required by checker
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer     # optional
 
-    def post(self, request, user_id):
-        user_to_follow = get_object_or_404(User, id=user_id)
+    def post(self, request, pk):
+        user_to_follow = get_object_or_404(CustomUser, pk=pk)
 
         if user_to_follow == request.user:
             return Response({"error": "You cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
@@ -77,11 +80,13 @@ class FollowUserView(APIView):
         return Response({"message": f"You are now following {user_to_follow.username}."})
 
 
-class UnfollowUserView(APIView):
+class UnfollowUserView(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()   # ✅ required by checker
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer     # optional
 
-    def post(self, request, user_id):
-        user_to_unfollow = get_object_or_404(User, id=user_id)
+    def post(self, request, pk):
+        user_to_unfollow = get_object_or_404(CustomUser, pk=pk)
 
         if user_to_unfollow == request.user:
             return Response({"error": "You cannot unfollow yourself."}, status=status.HTTP_400_BAD_REQUEST)

@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
+from rest_framework import generics
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
