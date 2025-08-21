@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from .serializers import RegisterSerializer, UserSerializer, LoginSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import AllowAny
 
 User = get_user_model()
 
@@ -18,6 +19,7 @@ def get_tokens_for_user(user):
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
