@@ -83,9 +83,13 @@ WSGI_APPLICATION = 'social_media_api.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",   # file will be created in your project root
+    'default':  {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'social_db2',   # Database name
+        'USER': 'root',       # MySQL username
+        'PASSWORD': 'Mugabo$123',   # MySQL password
+        'HOST': 'localhost',    # or an IP address
+        'PORT': '3306',         # MySQL default port
     }
 }
 
